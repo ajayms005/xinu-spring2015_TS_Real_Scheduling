@@ -1,0 +1,290 @@
+/*  main.c  - main */
+
+#include <xinu.h>
+#include <stdio.h>
+
+
+//char myfuncA(char d);
+
+void printprocstks(void);
+
+void someprogA();
+
+void someprogB();
+
+void rogueB();
+
+void rogueB2();
+
+long host2netl_asm(long);
+
+long net2hostl_asm(long);
+
+int myProgA(int a, int b);
+
+int nestedfunc(int);
+
+void printsegaddress(void);
+
+int roguefuncB(char c);
+
+void printloop(int);
+
+void cpuintensive(void);
+
+void iointensive(int);
+
+void mydeadlocktest(sid32, sid32);
+
+process	main(void)
+{
+       	kprintf("\nHello World!\n");
+       	kprintf("\nI'm the first XINU app and running function main() in system/main.c.\n");
+       	kprintf("\nI was created by nulluser() in system/initialize.c using create().\n");
+       	kprintf("\nMy creator will turn itself into the do-nothing null process.\n");
+       	kprintf("\nI will create a second XINU app that runs shell() in shell/shell.c as an example.\n");
+       	kprintf("\nYou can do something else, or do nothing; it's completely up to you.\n");
+	//kprintf("\n...creating a shell\n");
+       //	recvclr(); 
+     // resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
+        
+	//Part A
+       // char p = 'P';
+       //  pid32 pid1;
+//	pid32 pid2;
+//	pid32 pid3;
+//	pid32 pid4;
+        //Lab 2 4.1
+//	
+//	pid1 = create(printloop, 1024, 25, "child1",1, 11);
+	
+//	pid2 =create(printloop, 1024, 25, "child2",1, 22);
+
+//	pid3 = create(printloop, 1024, 25, "child3",1, 33);
+
+//	pid4 = create(printloop, 1024, 25, "child4",1, 44);
+        
+//	kprintf("%c",p);
+//	resume(pid1);
+//	kprintf("%c",p);
+//	resume(pid2);
+//	kprintf("%c",p);
+//	resume(pid3);
+//	kprintf("%c",p);
+//	resume(pid4);
+        
+//	sleepms(5000);
+
+  //Lab 2 Part B- CPU intensive
+ // resume(create(cpuintensive, 1024, 20, "process1", 0));
+ // resume(create(cpuintensive, 1024, 20, "process2", 0));
+ // resume(create(cpuintensive, 1024, 20, "process3", 0));
+ // resume(create(cpuintensive, 1024, 20, "process4", 0));
+ // resume(create(cpuintensive, 1024, 20, "process5", 0));
+ // resume(create(cpuintensive, 1024, 20, "process6", 0));
+	
+  //Lab 2 Part B -IO Intensive
+  // resume(create(iointensive, 1024, 20, "process1", 0));
+  // resume(create(iointensive, 1024, 20, "process2", 0));
+  // resume(create(iointensive, 1024, 20, "process3", 0));
+  // resume(create(iointensive, 1024, 20, "process4", 0));
+  // resume(create(iointensive, 1024, 20, "process5", 0));
+  // resume(create(iointensive, 1024, 20, "process6", 0));
+  
+  //Lab 2 Part B -Half Cpu And HAlf IO
+    //Lab 2 Part B -IO Intensive
+   // resume(create(cpuintensive, 1024, 20, "process1", 0));
+   // resume(create(cpuintensive, 1024, 20, "process2", 0));
+   // resume(create(cpuintensive, 1024, 20, "process3", 0));
+   // resume(create(iointensive, 1024, 20, "process4", 0));
+   // resume(create(iointenisive, 1024, 20, "process5", 0));
+   // resume(create(iointensive, 1024, 20, "process6", 0));
+    
+ //Lab 2 Part B - myglobal clock
+     // resume(create(cpuintensive, 1024, 20, "process1", 0));
+     // resume(create(cpuintensive, 1024, 20, "process2", 0));
+     // resume(create(cpuintensive, 1024, 20, "process3", 0));
+     // resume(create(iointensive, 1024, 20, "process4", 1, 5));
+     // resume(create(iointensive, 1024, 20, "process5",1, 20));
+     // resume(create(iointensive, 1024, 20, "process6", 1, 10));
+                             
+
+  	
+       //register int sp asm("sp");
+       //	int *ptr;
+       //	ptr = sp;
+//	int i;
+	
+      //Question 5 Lab
+       //resume(create(someprogB, 1024, 20, "someprogB", 0));
+        // resume(create(rogueB, 1024, 20, "rogueB", 0));
+      //  resume(create(rogueB2, 1024, 20, "rogueB2", 0));
+       // resume(create(someprogA, 1024, 20, "someprogA", 0));
+
+         
+	/* Wait for shell to exit and recreate it */
+
+       //	while (TRUE) {
+	// Print the address and content of the top of the run-time stack	receive();
+	//	sleepms(200);
+	//	kprintf("\n\nMain process recreating shell\n\n");
+	//	resume(create(shell, 4096, 20, "shell", 1, CONSOLE));
+       //	}
+       
+       //Question 3.3 Lab
+      // kprintf("\n The stack pointer address is %x\n",sp);
+      // kprintf("\n The contents of the top of the stack before myprogA is %x\n", *ptr);
+      // for(i=1;i<=12;i++)
+      // {
+        // ptr++;
+        // kprintf("The contents of the stack at position %d above the the stack pointer is %x", i, *ptr);
+       // }
+       //	resume(create(myProgA(1,2), 2048, 20, "process 1", 2));
+     
+     
+     
+     // Lab 3
+     sid32 s1, s2, s3,s4;
+     kprintf("Inside the semcreate part\n");
+     s1 = semcreate(1);
+     s2 = semcreate(1);
+     s3 = semcreate(1);
+     //s4 = semcreate(1);
+     resume(create(mydeadlocktest, 2048, 20, "d1", 2, s1, s2));
+     resume(create(mydeadlocktest, 2048, 20, "d2", 2, s2, s3));
+
+
+
+     
+     //Question 3.4 Lab
+    // printprocstks();
+
+      
+      // Question 3.1 Lab 
+      // long x = 0xABCDABCD;
+      // long y = host2netl_asm(x);
+      // kprintf("After the host2netl conversion, the address is %x\n", y);
+      // long z = net2hostl_asm(y);
+      // kprintf("After the net2hostl conversion, the address is %x\n", z);
+      
+      // Question 3.2 Lab
+      //printsegaddress();
+
+  //    return OK;
+}
+
+/*
+int somefuncB(char b)
+{
+ sleepms(20);
+ putc(CONSOLE, 'b');
+ return 1;
+}
+
+void someprogB()
+{
+ putc(CONSOLE,'B');
+ somefuncB('b');
+ putc(CONSOLE,'B');
+ }
+
+int somefuncA(char a)
+{
+ sleepms(20);
+ putc(CONSOLE, a);
+ return 1;
+ }
+
+void someprogA()
+{
+  putc(CONSOLE, 'A');
+  somefuncA('a');
+  putc(CONSOLE,  'A');
+ } 
+
+
+
+void rogueB()
+{
+ putc(CONSOLE, 'B');
+ sleepms(20);
+ nestedfunc(123);
+ putc(CONSOLE , 'B');
+ sleep(20);
+ }
+
+int nestedfunc(int n)
+{
+  static int i=1;
+  i++;
+  int a = 10;
+  int b = 20;
+  if(i==50)return 1;
+  if(n==0) return 0;
+  nestedfunc(n+1);
+  }
+
+void rogueB2()
+  {
+   int *p;
+   putc(CONSOLE, 'B');
+   sleepms(20);
+   register int sp  asm("sp");
+   p = sp;
+   asm("mov %esp,0xfdefbbc \n\t");
+         register int bx asm("ebx");
+         kprintf("\n this is bx register %x\n",bx);
+         kprintf("\n This is the sp address: in rogue %x \n",sp);
+         roguefuncB('b');
+         sleepms(20);
+       }
+           
+ int roguefuncB(char b)
+   {
+     register int sp asm("sp");
+     asm("mov 8(%ebp),%eax\n\t"
+         "add 0x30, %ebx\n\t"
+         "mov %esp, (%ebx)\n\t");
+     kprintf("\nin rogue %x\n",sp);
+  // char cpy[1028] =  {'a'};
+  // char buf[10];
+  // strcpy(buf,cpy);
+     putc(CONSOLE, b);
+     return 1;
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //                               }
+  //
+
